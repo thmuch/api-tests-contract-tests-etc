@@ -18,41 +18,41 @@ Für die Live-Demo werden Java 25, Spring Boot 4.0 und Pact 4.6 verwendet.
 
 ## Live-Demo
 
+Das Projekt beinhaltet sowohl den [Client/Consumer](src/main/java/apis_contracts_etc/consumer/) als auch den [Server/Provider](src/main/java/apis_contracts_etc/provider/). Beide bringen ihr eigenes Modell mit separaten Datentypen mit. Die Struktur beider Modelle ist zunächst identisch, wird sich aber im Verlauf der Live-Demo verändern.
+
 Folgende Schritte werden in der Live-Demo vorgeführt:
 
-- Das Projekt beinhaltet sowohl den [Client/Consumer](src/main/java/apis_contracts_etc/consumer/) als auch den
-  [Server/Provider](src/main/java/apis_contracts_etc/provider/). Beide bringen ihr eigenes Modell mit separaten
-  Datentypen mit. Die Struktur beider Modelle ist zunächst identisch, wird sich aber im Verlauf der Live-Demo
-  verändern.
-
+➡️ Der Server/Provider testet seine eigene Wetter-API integrativ, d.h. mit laufendem Server:
 
 - Im [WetterController](src/main/java/apis_contracts_etc/provider/WetterController.java) befindet sich der
   API-Endpoint des Providers.
 - Wir starten die [Application](src/main/java/apis_contracts_etc/Application.java), damit der Server/Provider läuft.
 - Über die [Swagger-UI](http://localhost:8080/swagger-ui.html) testen wir die API manuell.
-
-
 - (optional) API über den [IntelliJ-HTTP-Client](server-aufruf.http) testen.
 
+➡️ Der Client/Consumer testet die Provider-API:
 
 - [ClientApiTest](src/test/java/apis_contracts_etc/consumer/ClientApiTest.java) ausführen (sollte grün sein).
-- Server stoppen.
+- Server (Application) stoppen.
 - Test nochmal ausführen (sollte nun rot sein).
 
+➡️ (optional) Der Server/Provider testet seine eigene Wetter-API simuliert, d.h. *ohne* laufenden Server:
 
-- (optional) [ServerApiTest](src/test/java/apis_contracts_etc/provider/ServerApiTest.java) ausführen
+- [ServerApiTest](src/test/java/apis_contracts_etc/provider/ServerApiTest.java) ausführen
   (sollte grün sein - ohne laufenden Server).
 
+➡️ Consumer-driven Contract-Testing: Ohne Contracts hat der Provider (noch) nichts zum Verifizieren.
 
-- Nun schauen wir uns Consumer-driven Contract-Testing an.
 - [ProviderPactTest](src/test/java/apis_contracts_etc/provider/ProviderPactTest.java) ausführen.
 - Sollte mit der Fehlermeldung "No Pact files were found to verify" abbrechen, weil es noch keine Contracts im
   entsprechenden [Verzeichnis](src/test/resources/contracts/) gibt.
 
+➡️ Consumer-driven Contract-Testing: Der Consumer testet seinen Aufruf gegen eine simulierte API ("Mock") – und erzeugt nebenbei die Contract-Datei.
 
 - [ConsumerPactTest](src/test/java/apis_contracts_etc/consumer/ConsumerPactTest.java) ausführen (sollte grün sein).
 - Contract-Datei sollte nun im entsprechenden [Verzeichnis](src/test/resources/contracts/) vorhanden sein.
 
+➡️ Consumer-driven Contract-Testing: Der Provider kann seine API nun erfolgreich verifizieren und die API kann kompatibel erweitert werden.
 
 - Der [ProviderPactTest](src/test/java/apis_contracts_etc/provider/ProviderPactTest.java) sollte nun grün sein.
 - Wir erweitern die Wetter-API, ergänzen im [WetterInfo](src/main/java/apis_contracts_etc/provider/model/WetterInfo.java)-Record
@@ -60,6 +60,7 @@ Folgende Schritte werden in der Live-Demo vorgeführt:
   [WetterController](src/main/java/apis_contracts_etc/provider/WetterController.java) konstant `Wetterlage.SONNE` zurückliefern.
 - Der [ProviderPactTest](src/test/java/apis_contracts_etc/provider/ProviderPactTest.java) sollte immer noch grün sein!
 
+➡️ Consumer-driven Contract-Testing: Eine inkompatible API-Änderung führt zum Fehlschlag der Verifikation.
 
 - Nun bauen wir eine inkompatible API-Änderung ein.
 - In der [Temperatur](src/main/java/apis_contracts_etc/provider/model/Temperatur.java) ändern wir den Datentyp `int`
@@ -72,8 +73,9 @@ Folgende Schritte werden in der Live-Demo vorgeführt:
 - Der [ProviderPactTest](src/test/java/apis_contracts_etc/provider/ProviderPactTest.java) sollte nun fehlschlagen und
   auf inkompatible Datentypen hinweisen.
 
+➡️ (optional) Consumer-driven Contract-Testing: Wenn der Client einen inkompatiblen Contract erwartet, schlägt die Verifikation beim Provider fehl.
 
-- (optional) Die inkompatible API-Änderung von oben zurückdrehen. Nun ändern wir den Consumer-Contract inkompatibel.
+- Die inkompatible API-Änderung von oben zurückdrehen. Nun ändern wir den Consumer-Contract inkompatibel.
 - In die [ConsumerTemperatur](src/main/java/apis_contracts_etc/consumer/model/ConsumerTemperatur.java) bauen wir als
   zweites Feld des Records die [ConsumerEinheit](src/main/java/apis_contracts_etc/consumer/model/ConsumerEinheit.java) ein.
 - Der [ConsumerPactTest](src/test/java/apis_contracts_etc/consumer/ConsumerPactTest.java) ist zunächst noch grün. Wir
