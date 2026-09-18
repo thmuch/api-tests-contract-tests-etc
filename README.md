@@ -7,11 +7,12 @@ Ziel der Session ist es, die Grundlagen und Konzepte der verschiedenen Test-Vari
 Es ist kein Tool-Deep-Dive und auch keine Tool-Empfehlung. Die vorgestellten Konzepte lassen sich mit
 unterschiedlichen Tools und Frameworks in unterschiedlichen Programmiersprachen umsetzen.
 
-Für die Live-Demo werden Java 25, Spring Boot 4.0 und Pact 4.6 verwendet.
+Für die Live-Demo werden Java 27, Spring Boot 4.1 und Pact 4.7 verwendet.
 
 
 ## Vorträge & Folien
 
+- [Java Forum Nord 2026](https://javaforumnord.de/2026/), 22.09.2026 ([PDF](https://thomas-much.de/presentations/ApiTestsContractTests-JFN-2026.pdf))
 - [DevLand 2026](https://www.devland.eu/de/), 13.03.2026 ([PDF](https://thomas-much.de/presentations/ApiTestsContractTests-DevLand-2026.pdf))
 - [JavaLand 2026](https://www.javaland.eu/de/home/), 10.03.2026 ([PDF](https://thomas-much.de/presentations/ApiTestsContractTests-JavaLand-2026.pdf))
 
@@ -97,14 +98,15 @@ Folgende Schritte werden in der Live-Demo vorgeführt:
 
 ### Consumer-driven Contract-Testing
 
-- http://martinfowler.com/articles/consumerDrivenContracts.html
-- http://innoq.com/de/articles/2016/09/consumer-driven-contracts/
-- http://microsoft.github.io/code-with-engineering-playbook/automated-testing/cdc-testing/
+- https://martinfowler.com/articles/consumerDrivenContracts.html
+- https://innoq.com/de/articles/2016/09/consumer-driven-contracts/
+- https://microsoft.github.io/code-with-engineering-playbook/automated-testing/cdc-testing/
 
 ### CDC-Testing-Tools
 
-- http://pact.io
-- http://spring.io/projects/spring-cloud-contract
+- https://pact.io
+- https://spring.io/projects/spring-cloud-contract
+- https://microcks.io/
 
 ### Allgemeines API-Testing
 
